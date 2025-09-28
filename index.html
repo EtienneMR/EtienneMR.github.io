@@ -1,13 +1,15 @@
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Etienne_MR</title>
+        <meta name="description" content="Profil page of Etienne_MR" />
         <link
             rel="icon"
             type="image/png"
             href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAAXNSR0IArs4c6QAAApFJREFUWIXdlr+LE0EUx78nXiEWKYW7Ms0FvNjo7SIRFSTgidoZXQJBwhYrXCFZ8g/YhZydbBFSBI7ItR4nkkIFUyRqlSu02epIQEiT0koLfWsy2d33Mtnj1C+EbPLezHx25v2YlZ0Xb37gL9SZ0waIkjZYq1o+EV/SUjsmWVAHClgCrFRrnogvaUUS/LpvHScOlgVrVctIra8BALznlUSgrEKFhVvoKD98+roc0W+193dZn7O6k9NbLyoJFMCAUWxNhqPgOAnKeOxqgVmFSjI75rg2vHpj7v+NTAbAH/ijz3uov/0+4xNm67NIv8TGWKc7EE1k3NrRskXp/2tJqlbPn9OyRYmNMb8XHxVxtUin4pNiwUq15kyBJbX3d2EV9LpBIuUiiQV0tRCYNEM5hZUfVf9uE+fUqpaRNo1Qm9/rayfAQmBJ7JwUVBxjtDPPnj7AZvoCNi8XkTYN5HNZXLuyETuW/B3Xhlcti+BEYGrJOPK/AQDGx8fodPnxOtcl8Y5NhiNMhiNYBWkbnlenO0DaNNAS7Jq4JTmuDce1g99q0ZXI7/WRz2VFviwYxVanO4BXbyzVZkiOa7OJJDpKCvDpY5wMR8G3x/RTUqnWhBdTXsRg9FZevQFPsd27uwoAuGqmcOkiD3X7/jh4potBXKyxO0YlgUTpTtCvDsZRQ2dEY6bni2tN4uAPmyRtGkFClGrNmY9q5+ZaGMzv9YM0V4OfK675XBZPHl6fm4+SSRuMIPxef6m+pzOfdhNX011dhLNz0rrz06Jq0ZXaJdK+wabW19B+eTgDM70rahwRbOK3izBZj+4Ez1GZls9lAUF5UMXG2MfXewCAre1i8Pzl/btQ38yNm7F28qG5traL+mCnpZ9DJydfELWlTgAAAABJRU5ErkJggg=="
         />
-        <title>Etienne_MR</title>
         <style>
             :root {
                 --bg: #071016;
@@ -120,6 +122,7 @@
             }
             img {
                 border-radius: 25%;
+                image-rendering: "pixelated";
             }
             p {
                 margin: 0 0 8px 0;
@@ -166,9 +169,10 @@
     <body>
         <canvas id="codeCanvas" aria-hidden="true"></canvas>
 
-        <main class="card" role="main" aria-labelledby="name">
+        <main class="card" aria-labelledby="name">
             <h1 id="name">
                 <img
+                    alt="A pixel-art of a tiny robot"
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAAXNSR0IArs4c6QAAApFJREFUWIXdlr+LE0EUx78nXiEWKYW7Ms0FvNjo7SIRFSTgidoZXQJBwhYrXCFZ8g/YhZydbBFSBI7ItR4nkkIFUyRqlSu02epIQEiT0koLfWsy2d33Mtnj1C+EbPLezHx25v2YlZ0Xb37gL9SZ0waIkjZYq1o+EV/SUjsmWVAHClgCrFRrnogvaUUS/LpvHScOlgVrVctIra8BALznlUSgrEKFhVvoKD98+roc0W+193dZn7O6k9NbLyoJFMCAUWxNhqPgOAnKeOxqgVmFSjI75rg2vHpj7v+NTAbAH/ijz3uov/0+4xNm67NIv8TGWKc7EE1k3NrRskXp/2tJqlbPn9OyRYmNMb8XHxVxtUin4pNiwUq15kyBJbX3d2EV9LpBIuUiiQV0tRCYNEM5hZUfVf9uE+fUqpaRNo1Qm9/rayfAQmBJ7JwUVBxjtDPPnj7AZvoCNi8XkTYN5HNZXLuyETuW/B3Xhlcti+BEYGrJOPK/AQDGx8fodPnxOtcl8Y5NhiNMhiNYBWkbnlenO0DaNNAS7Jq4JTmuDce1g99q0ZXI7/WRz2VFviwYxVanO4BXbyzVZkiOa7OJJDpKCvDpY5wMR8G3x/RTUqnWhBdTXsRg9FZevQFPsd27uwoAuGqmcOkiD3X7/jh4potBXKyxO0YlgUTpTtCvDsZRQ2dEY6bni2tN4uAPmyRtGkFClGrNmY9q5+ZaGMzv9YM0V4OfK675XBZPHl6fm4+SSRuMIPxef6m+pzOfdhNX011dhLNz0rrz06Jq0ZXaJdK+wabW19B+eTgDM70rahwRbOK3izBZj+4Ez1GZls9lAUF5UMXG2MfXewCAre1i8Pzl/btQ38yNm7F28qG5traL+mCnpZ9DJydfELWlTgAAAABJRU5ErkJggg=="
                 />
                 Etienne_MR
