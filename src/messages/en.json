@@ -1,0 +1,12 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+
+  "title": "Etienne_MR — Student & Software Enthusiast",
+  "description": "Student experimenting with software and open source projects.",
+
+  "status": "Exploring software, open source, and new project ideas.",
+  "paragraph": "This page is intentionally simple — think of it as my code lab.",
+  "iconAlt": "Pixel-art of a small robot",
+
+  "lang": "English 🇬🇧"
+}

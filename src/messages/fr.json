@@ -1,0 +1,12 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+
+  "title": "Etienne_MR — Étudiant & Passionné de logiciels",
+  "description": "Étudiant qui expérimente avec les logiciels et les projets open source.",
+
+  "status": "Exploration des logiciels, de l’open source et de nouvelles idées de projets.",
+  "paragraph": "Cette page est volontairement simple — considérez-la comme mon laboratoire.",
+  "iconAlt": "Pixel-art d’un petit robot",
+
+  "lang": "Français 🇫🇷"
+}
