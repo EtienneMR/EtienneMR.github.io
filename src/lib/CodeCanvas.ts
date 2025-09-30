@@ -100,7 +100,6 @@ class Token {
 }
 
 export class CodeCanvas {
-  canvas: HTMLCanvasElement | null = null;
   ctx: CanvasRenderingContext2D | null = null;
   tokens: Token[] = [];
   mouse: MouseState = { x: 0, y: 0, down: false };
@@ -112,10 +111,8 @@ export class CodeCanvas {
   width = 0;
   height = 0;
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.canvas = canvas;
-
-    if (!this.canvas) {
+  constructor(public canvas: HTMLCanvasElement | null) {
+    if (!canvas) {
       console.warn("CodeCanvas: canvas element not defined");
       return;
     }
@@ -128,7 +125,7 @@ export class CodeCanvas {
       return;
     }
 
-    const ctx = this.canvas.getContext("2d", { alpha: true });
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) {
       console.warn("CodeCanvas: failed to get 2D context");
       return;
@@ -149,13 +146,19 @@ export class CodeCanvas {
   }
 
   _setupListeners() {
-    window.addEventListener("pointermove", this._onPointerMove, {
+    const opts: AddEventListenerOptions = {
       passive: true,
-    } as AddEventListenerOptions);
-    window.addEventListener("resize", this._onResize);
-    document.addEventListener("visibilitychange", this._onVisibilityChange);
-    window.addEventListener("mousedown", () => (this.mouse.down = true));
-    window.addEventListener("mouseup", () => (this.mouse.down = false));
+    };
+
+    window.addEventListener("pointermove", this._onPointerMove, opts);
+    window.addEventListener("resize", this._onResize, opts);
+    document.addEventListener(
+      "visibilitychange",
+      this._onVisibilityChange,
+      opts,
+    );
+    window.addEventListener("mousedown", () => (this.mouse.down = true), opts);
+    window.addEventListener("mouseup", () => (this.mouse.down = false), opts);
   }
 
   _onPointerMove(e: PointerEvent) {
@@ -285,9 +288,10 @@ export class CodeCanvas {
       ctx.restore();
     }
 
-    ctx.fillStyle = "rgba(255,255,255,0.1)";
-    ctx.fillRect(20, 20, 8, 8);
-    ctx.fillRect(32, 20, 8, 8);
-    ctx.fillRect(44, 20, 8, 8);
+    for (let i = 0; i < 3; i++) {
+      const x = i * 12 + 20;
+      ctx.fillStyle = `rgba(255,255,255,${0.15 + Math.cos(this._last / 1000 - i) / 10})`;
+      ctx.fillRect(x, 20, 8, 8);
+    }
   }
 }

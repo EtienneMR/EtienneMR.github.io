@@ -1,11 +1,6 @@
 <script lang="ts">
     import { m } from "$lib/paraglide/messages.js";
-    import {
-        locales,
-        localizeHref,
-        setLocale,
-        getLocale,
-    } from "$lib/paraglide/runtime";
+    import { locales, localizeHref, getLocale } from "$lib/paraglide/runtime";
     import { page } from "$app/state";
     import Button from "./Button.svelte";
 </script>
@@ -15,11 +10,9 @@
         {#each locales.filter((l) => l != getLocale()) as locale}
             <Button
                 href={localizeHref(page.url.pathname, { locale })}
-                onclick={(e: Event) => {
-                    e.preventDefault();
-                    setLocale(locale);
-                }}
-                >{m.lang({}, { locale })}
+                data-sveltekit-reload
+            >
+                {m.lang({}, { locale })}
             </Button>
         {/each}
     </nav>

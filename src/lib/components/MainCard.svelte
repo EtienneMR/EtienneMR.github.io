@@ -18,7 +18,8 @@
     main {
         position: relative;
         z-index: 2;
-        width: min(760px, 95vw);
+        width: 100%;
+        max-width: 760px;
         padding: 34px;
         background: linear-gradient(
             180deg,
@@ -41,13 +42,14 @@
 
     h1 {
         margin: 0 0 6px 0;
-        font-size: clamp(20px, 4vw, 34px);
+        font-size: 34px;
+        font-weight: bold;
         display: flex;
         gap: 12px;
     }
     img {
         border-radius: 25%;
-        image-rendering: "pixelated";
+        image-rendering: pixelated;
     }
     p {
         margin: 0 0 8px 0;

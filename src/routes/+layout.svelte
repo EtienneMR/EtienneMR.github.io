@@ -1,8 +1,7 @@
 <script lang="ts">
     import favicon from "$lib/assets/icons/38x38.png";
     import { m } from "$lib/paraglide/messages.js";
-    import { locales, localizeHref } from "$lib/paraglide/runtime";
-    import { page } from "$app/state";
+    import CodeCanvas from "$lib/components/CodeCanvas.svelte";
 
     let { children } = $props();
 </script>
@@ -28,12 +27,8 @@
     <link rel="icon" href={favicon} />
 </svelte:head>
 
+<CodeCanvas />
 {@render children?.()}
-<div style="display:none">
-    {#each locales as locale}
-        <a href={localizeHref(page.url.pathname, { locale })}>{locale}</a>
-    {/each}
-</div>
 
 <style>
     :global {
@@ -104,6 +99,10 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
         }
     }
 </style>

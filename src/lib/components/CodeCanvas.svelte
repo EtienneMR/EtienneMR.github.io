@@ -1,8 +1,9 @@
 <script lang="ts">
     import { CodeCanvas } from "$lib/CodeCanvas";
+    import { onMount } from "svelte";
     let canvas: HTMLCanvasElement;
 
-    $effect(() => {
+    onMount(() => {
         const anim = new CodeCanvas(canvas);
         anim.start();
     });

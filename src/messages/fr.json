@@ -1,10 +1,10 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
 
-  "title": "Etienne_MR — Étudiant & Passionné de logiciels",
-  "description": "Étudiant qui expérimente avec les logiciels et les projets open source.",
+  "title": "Etienne_MR — Étudiant & Passionné d’informatique",
+  "description": "Étudiant curieux de développement logiciel, de l’open source et de projets créatifs en code.",
 
-  "status": "Exploration des logiciels, de l’open source et de nouvelles idées de projets.",
+  "status": "Explore l'informatique, l’open source et recherche de nouvelles idées de projets.",
   "paragraph": "Cette page est volontairement simple — considérez-la comme mon laboratoire.",
   "iconAlt": "Pixel-art d’un petit robot",
 
