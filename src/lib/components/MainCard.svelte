@@ -44,7 +44,9 @@
         margin: 0 0 6px 0;
         font-size: 34px;
         font-weight: bold;
+        line-height: 1;
         display: flex;
+        align-items: center;
         gap: 12px;
     }
     img {

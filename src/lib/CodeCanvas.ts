@@ -1,3 +1,6 @@
+import type { Attachment } from "svelte/attachments";
+import { on } from "svelte/events";
+
 const GLYPHS = [
   "{",
   "}",
@@ -99,7 +102,7 @@ class Token {
   }
 }
 
-export class CodeCanvas {
+export default class CodeCanvas {
   ctx: CanvasRenderingContext2D | null = null;
   tokens: Token[] = [];
   mouse: MouseState = { x: 0, y: 0, down: false };
@@ -108,12 +111,13 @@ export class CodeCanvas {
   _last = 0;
   _requestedAnimationFrameId: number | null = null;
   _resizeTimeout: number | undefined;
+  _toCleanup: (() => void)[] = [];
   width = 0;
   height = 0;
 
   constructor(public canvas: HTMLCanvasElement | null) {
     if (!canvas) {
-      console.warn("CodeCanvas: canvas element not defined");
+      console.error("CodeCanvas: canvas element not defined");
       return;
     }
 
@@ -121,28 +125,26 @@ export class CodeCanvas {
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
+      console.debug("CodeCanvas: reduced motion detected")
       this._reduced = true;
       return;
     }
 
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) {
-      console.warn("CodeCanvas: failed to get 2D context");
+      console.error("CodeCanvas: failed to get 2D context");
       return;
     }
     this.ctx = ctx;
 
-    this.tokens = [];
     this.mouse = { x: 0, y: 0, down: false };
 
-    this._onPointerMove = this._onPointerMove.bind(this);
-    this._onResize = this._onResize.bind(this);
-    this._onVisibilityChange = this._onVisibilityChange.bind(this);
     this._loop = this._loop.bind(this);
     this._resizeSoon = this._resizeSoon.bind(this);
 
     this._setupListeners();
     this._resizeSoon();
+    console.debug("CodeCanvas: constructed")
   }
 
   _setupListeners() {
@@ -150,15 +152,13 @@ export class CodeCanvas {
       passive: true,
     };
 
-    window.addEventListener("pointermove", this._onPointerMove, opts);
-    window.addEventListener("resize", this._onResize, opts);
-    document.addEventListener(
-      "visibilitychange",
-      this._onVisibilityChange,
-      opts,
-    );
-    window.addEventListener("mousedown", () => (this.mouse.down = true), opts);
-    window.addEventListener("mouseup", () => (this.mouse.down = false), opts);
+    this._toCleanup.push(
+      on(window, "pointermove", this._onPointerMove.bind(this), opts),
+      on(window, "resize", this._onResize.bind(this), opts),
+      on(window, "mouseup", () => (this.mouse.down = false), opts),
+      on(window, "mousedown", () => (this.mouse.down = true), opts),
+      on(document, "visibilitychange", this._onVisibilityChange.bind(this), opts)
+    )
   }
 
   _onPointerMove(e: PointerEvent) {
@@ -190,8 +190,8 @@ export class CodeCanvas {
 
     this.canvas.style.width = width + "px";
     this.canvas.style.height = height + "px";
-    this.canvas.width = Math.round(width * DPR);
-    this.canvas.height = Math.round(height * DPR);
+    this.canvas.width = Math.floor(width * DPR);
+    this.canvas.height = Math.floor(height * DPR);
 
     this.ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
@@ -254,12 +254,6 @@ export class CodeCanvas {
 
     ctx.clearRect(0, 0, W, H);
 
-    const g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, "rgba(126,227,255,0.01)");
-    g.addColorStop(1, "rgba(255,143,191,0.01)");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
-
     for (const p of this.tokens) {
       const dx = p.x - this.mouse.x;
       const dy = p.y - this.mouse.y;
@@ -293,5 +287,25 @@ export class CodeCanvas {
       ctx.fillStyle = `rgba(255,255,255,${0.15 + Math.cos(this._last / 1000 - i) / 10})`;
       ctx.fillRect(x, 20, 8, 8);
     }
+  }
+
+  destroy() {
+    this._toCleanup.forEach(t => t())
+    this._toCleanup = []
+    if (this._resizeTimeout) clearTimeout(this._resizeTimeout);
+
+    this.stop()
+    this.tokens = [];
+    this.canvas = null;
+    this.ctx?.clearRect(0, 0, this.width, this.height);
+    this.ctx = null;
+    console.debug("CodeCanvas: destroyed")
+  }
+
+  static asAttachment(canvas: HTMLCanvasElement) {
+    const cc = new CodeCanvas(canvas)
+    cc.start()
+
+    return () => cc.destroy()
   }
 }
